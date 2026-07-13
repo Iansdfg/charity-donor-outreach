@@ -44,6 +44,28 @@ User-provided donor data always takes precedence over the bundled mock file.
 
 > `$charity-donor-outreach` Generate an Annual Fund letter only for Dorothy Callahan from the bundled mock data.
 
+### Common prompt patterns
+
+Use the included campaign file to make these prompts complete and runnable as written:
+
+1. Create one draft and open it in Mail:
+
+   > `$charity-donor-outreach` Use `examples/campaign.annual-fund.yaml` to create an email draft for Robert Svensson from the bundled mock data, and open it as an unsent draft in Mail.
+
+2. Create drafts for a list of people:
+
+   > `$charity-donor-outreach` Use `examples/campaign.annual-fund.yaml` to create email drafts for Robert Svensson, Dorothy Callahan, and Ada Yamamoto-Pierce from the bundled mock data.
+
+3. Create drafts for all donors:
+
+   > `$charity-donor-outreach` Use `examples/campaign.annual-fund.yaml` to create email drafts for all donors in the bundled mock data. Process them in manageable batches and report which donors remain.
+
+4. Create drafts for Gold donors:
+
+   > `$charity-donor-outreach` Use `examples/campaign.annual-fund.yaml` to create email drafts for all donors classified as Gold in the bundled mock data.
+
+Mail requests create and open an unsent `.eml` draft; the skill never sends it. Use exact donor names when requesting a list. “All donors” is processed in manageable batches, and Gold classification is calculated from reconciled giving data rather than copied blindly from the supplied tier.
+
 ### Use a campaign file
 
 Attach a campaign YAML file or reference an included example:
