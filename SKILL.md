@@ -90,6 +90,10 @@ Never infer Mr., Mrs., Ms., Mx., Dr., gender, pronouns, marital status, ethnicit
 
 Fill `templates/donor-letter.html` and return the rendered HTML directly in the conversation. Preserve the core fields: date, salutation, charity, grounded lifetime giving when available, campaign paragraph, exact ask, closing appreciation, approved tier-specific line, donation URL, sender, and title.
 
+**HTML is mandatory for the default response.** Read `templates/donor-letter.html` immediately before composing each batch and preserve its structure and inline paragraph styles. Do not replace it with Markdown or plain prose. A Markdown link such as `[Make a secure donation](URL)` is invalid; use the template’s `<a href="...">` element. The opening, campaign, ask, and closing paragraphs must each retain `text-indent: 2em` and their configured bottom margins. If the draft does not contain `<!doctype html>`, `<main>`, the presentation table, and all four indented content paragraphs, regenerate it before returning.
+
+Do not use terse legacy sentences such as “Our records show lifetime giving of…,” “Your support sustains our community programs” as a complete paragraph, or “Would you consider a gift of…?” by themselves. Integrate those grounded facts into the warm five-part voice required by Phase 6.
+
 Escape untrusted text. Do not return scripts, iframes, event handlers, tracking pixels, unapproved URLs, or unresolved placeholders. If a value is unavailable, omit its optional sentence or use the explicitly documented fallback—never invent it.
 
 For multiple donors, preserve input order and return clearly labeled, separated drafts. Process a manageable batch that fits the current context. Track completed, skipped, warning, and remaining counts. Stop before truncation, report exactly which records remain, and avoid regenerating completed records during the active task. When the bundled 50-record mock file is selected, start with a manageable first batch and identify all unprocessed mock donor IDs in the remaining count.
@@ -97,6 +101,8 @@ For multiple donors, preserve input order and return clearly labeled, separated 
 ## Phase 9: Review and return
 
 Apply every check in `references/output-validation.md`. Precede the letters with a compact warning/batch summary when needed. Label all output `Draft — human review required` outside the HTML.
+
+Treat any Markdown-only letter, Markdown donation link, missing closing-appreciation paragraph, or missing `text-indent: 2em` style as a failed draft—not an acceptable fallback.
 
 Do not generate a letter for a donor marked do-not-contact, opted out, deceased, or otherwise suppressed. Report the skip without exposing unnecessary personal information. Do not add or invoke any send-email capability.
 

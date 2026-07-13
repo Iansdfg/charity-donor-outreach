@@ -14,6 +14,14 @@ Every letter should sound like one caring person writing to another:
 
 Prefer conversational sentences, contractions where natural, and varied wording. Avoid corporate jargon, excessive superlatives, repeated “thank you,” false intimacy, emotional manipulation, and claims such as “we know how deeply you care” unless explicitly supplied and approved.
 
+The following terse legacy patterns are not acceptable as complete paragraphs:
+
+- “Our records show lifetime giving of …”
+- “Your support sustains our community programs.”
+- “Would you consider a gift of …?”
+
+The underlying facts may be used, but weave them into natural gratitude, community context, a respectful invitation, and a separate appreciative close.
+
 | Campaign | Safe tone and focus | Claims needing explicit supplied approval |
 |---|---|---|
 | Emergency Appeal | Direct, calm, timely; explain the stated need | urgency, deadline, match, impact/outcome figures |
