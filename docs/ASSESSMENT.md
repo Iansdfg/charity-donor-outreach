@@ -1,27 +1,20 @@
-# Legacy Skill Assessment
+# Assessment
 
-## Strengths
+## Why the original skill needed improvement
 
-The original artifact recognized useful concepts: transaction history, tiers, campaign-aware prose, ask calculations, salutations, and HTML output. It was direct enough to prototype expected behavior.
+The legacy prompt had a useful direct interaction model—upload donor data and receive HTML letters—but activated too broadly, embedded mock donor records, treated names as identifiers, conflated Lapsed with financial tier, and left ask order and missing data ambiguous. It explicitly encouraged fabricated matches, urgency, offers, event counts, naming opportunities, relationship managers, and gendered honorific guesses. It lacked suppression, consent, injection, HTML-safety, batching, review, and evaluation guidance.
 
-## Risks and changes
+## Why the final design is prompt-native
 
-| Legacy issue | Change | Expected impact |
-|---|---|---|
-| Activation covered nearly any money, email, charity, event, report, grant, or outreach task | Narrow activation to authorized donor-draft requests | Fewer accidental disclosures and inappropriate runs |
-| Mock donor table embedded in instructions and keyed by name | Move mock data to examples and require stable IDs | Avoids name collisions and prompt/data coupling |
-| No source-of-truth precedence | Gift transactions > versioned policy > normalized fields > supplied summaries | Reproducible values and visible conflicts |
-| Inconsistent supplied tiers/totals | Recalculate and emit typed material warnings | Prevents silent bad asks |
-| Lapsed treated as a tier | Separate financial tier and engagement status | Preserves high-value context without conflation |
-| Ambiguous ask order/rounding and missing-data behavior | Decimal policy pipeline with one final round, caps, and explicit Bronze fallback | Exact, testable asks |
-| Directed fabricated match language | Approved registry plus confirmed-match gate | Eliminates unsupported matching claims |
-| Invented naming, tote bags, event counts, urgency, managers | Require approved claims/facts | Grounds every offer and identity |
-| Guessed gendered honorifics | Safe explicit fallback chain only | Prevents demographic inference and misgendering |
-| “Make assumptions” for missing values | Fail closed or warn/review | Makes uncertainty visible |
-| No suppression or consent controls | Evaluate DNC, opt-out, deceased, household duplicate, and conflicts first | Prevents provider calls for suppressed donors |
-| Raw HTML interpolation | Autoescape, controlled templates, URL/content validation | Reduces HTML/script/tracking injection |
-| One in-chat batch | Atomic JSONL state, idempotency, isolated failures, resume | Scales reliably on one host |
-| No structured result | Pydantic models and JSON Schemas | Machine-verifiable downstream contract |
-| No human review | Every success is `requires_review` | Prevents autonomous use |
-| No evaluation/observability | Offline tests, release gates, summaries, structured audit context | Detects regressions and supports operations |
+The requested artifact is a portable Agent Skill, not an application. `SKILL.md`, six focused references, legacy-compatible mock data, and controlled templates are sufficient for an installed agent to read input, reason through rules, calculate asks, and return HTML in chat. Removing the Python package eliminates interpreter, dependency, CLI, provider, and setup requirements and restores the original ease of use.
+
+## Instruction-level safeguards
+
+The final workflow explicitly defines source precedence, conflict warnings, separate tier/engagement classification, exact ask ordering, approved-claim gates, confirmed-match requirements, salutation fallbacks, suppression behavior, prompt-injection resistance, HTML restrictions, bounded batching, and mandatory review. Portable cases make expected behavior inspectable without a test runtime.
+
+## Honest limitations
+
+Instructions are not deterministic code. The model can make arithmetic, parsing, omission, or compliance mistakes; HTML is checklist-reviewed rather than parser-sanitized; batching is context-bound rather than transactional; and the skill provides no immutable audit log or delivery enforcement. These tradeoffs are why every output is a draft requiring human review.
+
+An organization may optionally add deterministic consent, validation, calculation, auditing, approval, and delivery controls in its host application. Those systems are outside this portable skill and are not required for installation.
 
