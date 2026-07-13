@@ -1,0 +1,11 @@
+{
+  "campaign_id": "FY26-EMERGENCY",
+  "name": "Emergency Response",
+  "charity_name": "Example Community Charity",
+  "campaign_type": "emergency",
+  "as_of_date": "2026-07-01",
+  "donation_url": "https://give.example.org/emergency",
+  "currency": "USD",
+  "claims": [{"claim_id": "match-pending", "text": "Gifts will be matched.", "status": "pending", "category": "match"}],
+  "match": {"status": "unconfirmed", "ratio": "1.0"}
+}

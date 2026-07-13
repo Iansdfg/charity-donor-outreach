@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/donor.schema.json",
+  "title": "DonorInput",
+  "type": "object",
+  "required": ["donor_id"],
+  "additionalProperties": false,
+  "properties": {
+    "donor_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$"},
+    "first_name": {"type": ["string", "null"], "maxLength": 100},
+    "preferred_name": {"type": ["string", "null"], "maxLength": 100},
+    "preferred_salutation": {"type": ["string", "null"], "maxLength": 150},
+    "gifts": {"type": "array", "items": {"$ref": "#/$defs/gift"}},
+    "volunteer": {"type": "boolean"},
+    "do_not_contact": {"type": "boolean"},
+    "communication_status": {"enum": ["opted_in", "unknown", "opted_out"]},
+    "deceased": {"type": "boolean"},
+    "household_id": {"type": ["string", "null"]},
+    "household_primary": {"type": "boolean"},
+    "supplied_tier": {"enum": ["bronze", "silver", "gold", "platinum", null]}
+  },
+  "$defs": {
+    "money": {"type": "object", "required": ["amount", "currency"], "additionalProperties": false, "properties": {"amount": {"type": ["string", "number"], "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"}, "currency": {"const": "USD"}}},
+    "gift": {"type": "object", "required": ["gift_id", "date", "amount"], "additionalProperties": false, "properties": {"gift_id": {"type": "string", "minLength": 1}, "date": {"type": "string", "format": "date"}, "amount": {"$ref": "#/$defs/money"}, "description": {"type": ["string", "null"]}}}
+  }
+}
+

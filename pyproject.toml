@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "charity-donor-outreach"
+version = "1.0.0"
+description = "Policy-governed, human-reviewed donor outreach draft generation"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "Apache-2.0" }
+dependencies = [
+  "jinja2>=3.1,<4",
+  "jsonschema>=4.23,<5",
+  "pydantic>=2.8,<3",
+  "pyyaml>=6.0,<7",
+  "typer>=0.12,<1",
+]
+
+[project.optional-dependencies]
+dev = ["mypy>=1.11", "pytest>=8", "pytest-cov>=5", "ruff>=0.6", "types-PyYAML>=6"]
+openai = ["openai>=1.50,<3"]
+
+[project.scripts]
+charity-donor-outreach = "charity_donor_outreach.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/charity_donor_outreach"]
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers --cov=charity_donor_outreach --cov-report=term-missing"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+disallow_untyped_calls = false
+disable_error_code = ["import-untyped"]

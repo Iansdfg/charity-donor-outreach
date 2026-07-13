@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/generation-result.schema.json",
+  "type": "object",
+  "required": ["donor_id", "campaign_id", "status", "approval_status", "policy_version", "template_version", "model_identifier", "idempotency_key"],
+  "properties": {
+    "donor_id": {"type": "string"}, "campaign_id": {"type": "string"},
+    "status": {"enum": ["draft_generated", "suppressed", "failed"]},
+    "financial_tier": {"enum": ["bronze", "silver", "gold", "platinum", null]},
+    "engagement_status": {"enum": ["active", "lapsed", "never_gave", null]},
+    "recommended_ask": {"type": ["object", "null"]}, "personalization_facts_used": {"type": "array"},
+    "campaign_claims_used": {"type": "array"}, "warnings": {"type": "array"}, "letter": {"type": ["object", "null"]},
+    "approval_status": {"const": "requires_review"}, "policy_version": {"type": "string"},
+    "template_version": {"type": "string"}, "model_identifier": {"type": "string"}, "idempotency_key": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "suppression_reasons": {"type": "array"}
+  },
+  "additionalProperties": false
+}
+

@@ -1,0 +1,12 @@
+{
+  "campaign_id": "FY26-ANNUAL",
+  "name": "FY26 Annual Fund",
+  "charity_name": "Example Community Charity",
+  "campaign_type": "annual_fund",
+  "as_of_date": "2026-07-01",
+  "donation_url": "https://give.example.org/annual",
+  "currency": "USD",
+  "claims": [{"claim_id": "community", "text": "Your support sustains community programs.", "status": "approved", "category": "general"}],
+  "match": {"status": "none"}
+}
+

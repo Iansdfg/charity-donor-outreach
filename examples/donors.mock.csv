@@ -1,0 +1,5 @@
+donor_id,first_name,preferred_name,preferred_salutation,gift_id,gift_date,gift_amount,currency,volunteer,do_not_contact,communication_status,deceased,household_id,household_primary,supplied_tier
+D-1001,Ada,,,G-1001,2025-03-10,12000.00,USD,true,false,opted_in,false,H-1001,true,gold
+D-1002,Sam,,,G-1002,2024-01-15,500.00,USD,false,false,opted_in,false,H-1002,true,bronze
+D-1003,Alex,,,G-1003,2025-02-01,100.00,USD,false,true,opted_out,false,H-1003,true,bronze
+

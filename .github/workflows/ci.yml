@@ -1,0 +1,33 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -e '.[dev]'
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: mypy src tests
+      - run: pytest -q --cov=charity_donor_outreach --cov-report=term-missing
+      - name: Validate schemas, YAML, and skill frontmatter
+        run: pytest -q tests/unit/test_contracts.py
+      - name: Security tests
+        run: pytest -q tests/security
+      - name: Offline example
+        run: |
+          charity-donor-outreach validate --donors examples/donors.mock.csv --campaign examples/campaign.annual-fund.json
+          charity-donor-outreach generate --donors examples/donors.mock.csv --campaign examples/campaign.annual-fund.json --output runs/ci --provider fake
+          charity-donor-outreach resume --run runs/ci
+          charity-donor-outreach summarize --run runs/ci

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/run-manifest.schema.json",
+  "type": "object",
+  "required": ["run_id", "campaign_id", "policy_version", "template_version", "provider", "status", "created_at", "updated_at"],
+  "additionalProperties": false,
+  "properties": {
+    "run_id": {"type": "string"}, "campaign_id": {"type": "string"}, "policy_version": {"type": "string"},
+    "template_version": {"type": "string"}, "provider": {"type": "string"},
+    "status": {"enum": ["created", "running", "completed", "completed_with_errors", "failed"]},
+    "created_at": {"type": "string", "format": "date-time"}, "updated_at": {"type": "string", "format": "date-time"}
+  }
+}
+

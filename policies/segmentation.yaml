@@ -1,0 +1,9 @@
+version: "1.0.0"
+currency: USD
+tiers:
+  bronze: {minimum: "0.00", maximum_exclusive: "1000.00"}
+  silver: {minimum: "1000.00", maximum_exclusive: "10000.00"}
+  gold: {minimum: "10000.00", maximum_exclusive: "50000.00"}
+  platinum: {minimum: "50000.00"}
+lapsed_after_days: 1095
+
