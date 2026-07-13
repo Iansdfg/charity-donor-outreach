@@ -10,7 +10,7 @@ description: >-
 
 # Charity Donor Outreach
 
-Create grounded HTML donor-letter drafts from an uploaded CSV, pasted donor list, individual donor record, or the bundled synthetic example dataset. This is a dependency-free, prompt-native workflow: use file reading, reasoning, basic arithmetic, and template substitution only. Return drafts in the conversation. Never send them. Every draft requires human review.
+Create grounded HTML donor-letter drafts from an uploaded CSV, pasted donor list, individual donor record, or the bundled synthetic example dataset. The prompt-native workflow remains dependency-free; an optional standard-library Python helper can deterministically assist with donor calculations only after user approval. Return drafts in the conversation. Never send them. Every draft requires human review.
 
 ## Mandatory output contract
 
@@ -36,8 +36,31 @@ Read only what the task needs, but always read the safety, input, ask, and outpu
 - `references/ask-calculation.md`
 - `references/campaign-messaging.md`
 - `references/output-validation.md`
+- `references/template-placeholders.md`
 
 Use `templates/donor-letter.html` for default output. Use `templates/donor-letter.txt` only when plain text is explicitly requested.
+
+## Optional deterministic calculation
+
+Determine whether deterministic assistance is appropriate before processing donor data. Offer the included local Python calculator once when the request involves multiple donors, conflicting summaries, ask calculations, filtering by calculated tier, high-value donors, reproducible/auditable calculations, or more than a small number of records. Do not offer it for every trivial single-donor request.
+
+Use this concise consent question:
+
+> I can use the included local Python calculator to validate donor history and calculate asks deterministically. It uses only the Python standard library and sends no donor data externally. Would you like me to use it?
+
+Do not execute the helper before the user approves. Do not ask again during the same task. If the user requests no Python, no local execution, or prompt-only processing, continue immediately in prompt-native fallback mode.
+
+After approval, check for `python3`, then `python`. If available, run `scripts/calculate_donor.py` with the applicable donor JSON/CSV, campaign type, and `as_of_date`. Use a successful result as authoritative for donor arithmetic, reconciled amounts, financial tier, engagement, suppression flags, ask, warnings, and trace. Do not recalculate a successful helper result in the language model.
+
+If Python is unavailable, say:
+
+> Python is not available in this environment. I can either continue with the prompt-native calculation procedure or help install Python if this environment permits it.
+
+Never install Python unless the user explicitly asks and approves the explained environment-appropriate command. Never use `curl | sh`, unknown binaries, unexplained administrator access, unrelated system changes, or third-party Python packages.
+
+If the user declines Python or installation, continue with the existing reference-driven procedure and report `Calculation mode: prompt-native fallback`. State that arithmetic and validation require human review. If the helper fails, record its error without exposing unnecessary donor data, continue with the prompt-native rules, and report `Deterministic helper unavailable; used prompt-native fallback.` Never claim deterministic validation unless the helper completed successfully.
+
+The helper does not authorize campaign claims, generate narrative, choose salutations, render HTML, establish consent, satisfy legal requirements, or remove human review. Continue to apply the claim, messaging, salutation, template, and output-safety rules in this skill after a successful calculation.
 
 ## Phase 1: Understand the request
 
@@ -124,4 +147,4 @@ Do not generate a letter for a donor marked do-not-contact, opted out, deceased,
 
 ## Completion summary
 
-Report the donor source; the number completed, skipped, warning-bearing, and remaining; the campaign and date basis; any safe fallbacks; and confirmation that asks and claims were reviewed against the references. When mock data was selected automatically, repeat that the records and drafts are synthetic demonstrations. The HTML letters—not structured JSON—are the default deliverable.
+Report the calculation mode; donor source; the number completed, skipped, warning-bearing, and remaining; the campaign and date basis; any safe fallbacks; and confirmation that asks and claims were reviewed against the references. Use `Calculation mode: deterministic-assisted` only after successful helper execution. When mock data was selected automatically, repeat that the records and drafts are synthetic demonstrations. The HTML letters—not structured JSON—are the default deliverable.

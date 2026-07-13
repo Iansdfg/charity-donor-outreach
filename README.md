@@ -1,6 +1,6 @@
 # Charity Donor Outreach Agent Skill
 
-This is an installable, dependency-free Agent Skill for generating personalized donor-letter drafts from an uploaded CSV, pasted donor list, or individual donor record. It requires no Python, Node.js, virtual environment, package manager, API server, database, external library, or separate API key. The executing agent reads `SKILL.md`, applies the included references, and returns HTML donor-letter drafts directly in the conversation.
+This is an installable, dependency-free Agent Skill for generating personalized donor-letter drafts from an uploaded CSV, pasted donor list, or individual donor record. Its prompt-native path requires no Python, Node.js, virtual environment, package manager, API server, database, external library, or separate API key. The executing agent reads `SKILL.md`, applies the included references, and returns HTML donor-letter drafts directly in the conversation.
 
 Legacy fields such as `Donor Name`, `Tier`, `Region`, `Gifts`, `Largest Gift`, `Lifetime Total`, `Last Gift Year`, and `Volunteer` remain supported. Every result is a draft requiring human review; the skill never sends communications.
 
@@ -21,6 +21,40 @@ Restart Codex or begin a new session afterward so it loads the latest instructio
 ## Use
 
 Invoke the skill explicitly with `$charity-donor-outreach`, followed by a natural-language request.
+
+### Optional deterministic calculations
+
+Python is optional. The skill still works without Python through its reference-driven prompt-native fallback. For batches, conflicting donor summaries, calculated-tier filtering, high-value donors, or reproducible/auditable calculations, the agent offers the included local calculator once. It must receive your approval before executing the helper.
+
+The helper uses only the Python standard library and sends no donor data externally. It deterministically handles donor arithmetic, reconciliation, financial tier, engagement, suppression flags, asks, warnings, and calculation traces. It does not generate letters, approve campaign claims, establish consent, or remove the human-review requirement.
+
+When Python is available and you approve, the agent uses deterministic-assisted mode. When Python is unavailable, declined, or fails, it continues in prompt-native fallback mode and clearly labels that mode. The agent never installs Python unless you explicitly request and approve an explained installation command, and it never installs third-party Python packages for this helper.
+
+Run the helper manually for one donor:
+
+```bash
+python3 scripts/calculate_donor.py donor \
+  --input examples/donor.single.json \
+  --as-of-date 2026-07-01 \
+  --campaign-type "Annual Fund"
+```
+
+Run it for a legacy-compatible CSV:
+
+```bash
+python3 scripts/calculate_donor.py csv \
+  --input examples/donors.mock.csv \
+  --as-of-date 2026-07-01 \
+  --campaign-type "Annual Fund"
+```
+
+Use `python` instead of `python3` where `python` refers to Python 3. Both commands emit JSON to stdout; diagnostics go to stderr. JSON is an optional calculation artifact—the normal user-facing result remains a human-review-required HTML letter draft.
+
+#### Trust boundaries
+
+**Deterministic-assisted mode:** after the helper completes successfully, its arithmetic, classifications under the documented policy, reconciliation warnings, and suppression evaluation for supplied fields are deterministic. Campaign claims still require approved input; narrative remains model-generated; HTML, consent, legal compliance, and organizational policy still require human review.
+
+**Prompt-native fallback mode:** the agent follows the same documented rules, but model-executed arithmetic and reconciliation are not guaranteed deterministic. A reviewer must verify all amounts and classifications. A helper failure never blocks drafting and is never reported as successful deterministic validation.
 
 ### Use the bundled mock donors
 
@@ -121,8 +155,10 @@ SKILL.md                     canonical workflow
 references/                  readable validation, policy, safety, and review rules
 templates/                   controlled HTML and optional plain-text layouts
 examples/                    legacy mock CSV and campaign/output examples
-tests/                       portable cases and an evaluation rubric
+scripts/                     optional standard-library calculator and validator
+tests/                       portable rubric plus executable offline unittests
 docs/                        assessment, design decisions, and migration notes
+.github/workflows/ci.yml      offline tests on Python 3.11 and 3.12
 ```
 
 ## Safety rules
@@ -144,10 +180,12 @@ docs/                        assessment, design decisions, and migration notes
 - Edit [donor-letter.html](templates/donor-letter.html) for visual style and approved placeholders.
 - Update [test-cases.md](tests/test-cases.md) whenever a rule changes.
 
+When changing arithmetic policy, update the constants in `scripts/donor_policy.py` and the human-readable references together, then run the offline tests. Do not copy policy constants into other Python modules.
+
 Review policy changes with fundraising, privacy, accessibility, and legal stakeholders before use.
 
 ## Limitations
 
-This is a prompt-native skill, not a campaign platform. The executing model performs parsing, arithmetic, and substitution, so the repository cannot guarantee deterministic enforcement, transactional state, exactly-once batching, distributed processing, auditing, or delivery controls. Large donor lists must be processed in bounded batches that fit the runtime context.
+This is an Agent Skill, not a campaign platform. Without the optional helper, the executing model performs parsing, arithmetic, and substitution, so prompt-native results are not guaranteed deterministic. With a successful helper run, only its calculation, reconciliation, classification, and supplied-field suppression outputs are deterministic; narrative, campaign-claim authorization, HTML review, consent, and legal compliance are not. The repository does not provide transactional state, exactly-once batching, distributed processing, delivery controls, or universal auditing. Large donor lists must be processed in bounded batches that fit the runtime context.
 
 Organizations may enforce consent, suppression, arithmetic, claims, auditing, and delivery in a surrounding application, but those external systems are not required to install or use this skill. Human review remains mandatory.

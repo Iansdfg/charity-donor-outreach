@@ -1,0 +1,42 @@
+{
+  "as_of_date": "2026-07-01",
+  "cases": {
+    "platinum": {
+      "record": {"Donor Name": "A", "Gifts": "2024: $25,000; 2025: $50,000", "Tier": "Platinum", "Volunteer": "No", "Communication Status": "active"},
+      "tier": "Platinum",
+      "engagement": "Active",
+      "ask": "22000.00"
+    },
+    "gold": {
+      "record": {"Donor Name": "B", "Gifts": "2023: $8,000; 2024: $12,000", "Lifetime Total": "$20,000", "Volunteer": "No", "Communication Status": "active"},
+      "tier": "Gold",
+      "engagement": "Active",
+      "ask": "3000.00"
+    },
+    "silver_volunteer": {
+      "record": {"Donor Name": "C", "Gifts": "2023: $1,000; 2024: $1,400", "Volunteer": "Yes", "Communication Status": "active"},
+      "tier": "Silver",
+      "engagement": "Active",
+      "ask": "300.00"
+    },
+    "bronze": {
+      "record": {"Donor Name": "D", "Gifts": "2024: $200; 2025: $250", "Volunteer": "No", "Communication Status": "active"},
+      "tier": "Bronze",
+      "engagement": "Active",
+      "ask": "150.00"
+    },
+    "lapsed_platinum": {
+      "record": {"Donor Name": "E", "Gifts": "2018: $30,000; 2020: $50,000", "Tier": "Lapsed", "Volunteer": "No", "Communication Status": "active"},
+      "tier": "Platinum",
+      "engagement": "Lapsed",
+      "ask": "15000.00"
+    },
+    "combined": {
+      "record": {"Donor Name": "F", "Gifts": "2024: $600; 2025: $1,400", "Volunteer": "Yes", "Communication Status": "active"},
+      "campaign_type": "Emergency Appeal",
+      "tier": "Silver",
+      "engagement": "Active",
+      "ask": "400.00"
+    }
+  }
+}
