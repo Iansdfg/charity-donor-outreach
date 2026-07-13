@@ -122,3 +122,12 @@ Evaluate these cases by invoking the skill or reviewing a generated response. Un
 ## Batch behavior check
 
 Run cases 1–15 in input order. Confirm clear donor labels, no output for case 15, completed/skipped/warning/remaining counts, and an honest stop-and-resume note if the runtime cannot fit all cases in one response.
+
+## 16. No donor data supplied
+
+- **Input:** Campaign details only; no uploaded CSV, pasted donor list, or individual donor record.
+- **Expected source:** automatically read `examples/donors.mock.csv`; do not ask for confirmation.
+- **Expected precedence:** if donor data is subsequently supplied, use it instead of the bundled file.
+- **Expected labeling:** summary says `Using bundled synthetic mock donor data`; every donor section says `Mock data — demonstration draft` outside its HTML.
+- **Expected batching:** preserve mock CSV order, generate only a manageable first batch, and report completed and remaining mock donor IDs/counts.
+- **Prohibited:** describing mock people as real donors, mixing mock data with later user-provided records, or omitting the synthetic-data disclosure.

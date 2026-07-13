@@ -10,7 +10,7 @@ Score each generated donor draft from 0–2 per category. Any critical failure b
 | Salutation safety | Invented name/title or demographic inference | Safe but misses a supplied preference | Correct four-step fallback with no inference |
 | HTML completeness | Unsafe HTML, URL, or unresolved placeholder | Safe HTML with a minor accessibility/completeness issue | Controlled, complete, readable, accessible HTML using approved URL only |
 | Input compatibility | Rejects usable legacy input | Requires avoidable clarification | Directly accepts legacy columns and optional richer fields |
-| Clarity | Confusing letter or warning summary | Understandable with excess detail | Concise letter, separated warnings, useful batch labels/counts |
+| Clarity and human tone | Stiff, transactional, manipulative, or confusing | Understandable but generic, repetitive, or overly formal | Warm grounded gratitude, caring connection, respectful ask, appreciative close, and clear warnings |
 | Human-review labeling | Missing review boundary | Review need implied | Explicit `Draft — human review required` outside HTML |
 
 Maximum score: 16. Recommended pass: 14+, with no critical failure.

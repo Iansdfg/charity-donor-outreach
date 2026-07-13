@@ -8,6 +8,8 @@
 
 {{ASK_PARAGRAPH}}
 
+{{CLOSING_PARAGRAPH}}
+
 Make a secure donation: {{DONATION_URL}}
 
 With gratitude,

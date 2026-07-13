@@ -5,19 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{SUBJECT}}</title>
 </head>
-<body>
-  <main style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 30px; color: #222; line-height: 1.5;">
-    <p style="text-align: right; color: #666;">{{DATE}}</p>
-    <p>{{SALUTATION}}</p>
-    <p>{{OPENING_PARAGRAPH}}</p>
-    <p>{{CAMPAIGN_PARAGRAPH}}</p>
-    <p>{{ASK_PARAGRAPH}}</p>
-    <p><a href="{{DONATION_URL}}">Make a secure donation</a>.</p>
-    <p>With gratitude,<br>
-      <strong>{{SENDER_NAME}}</strong><br>
-      {{SENDER_TITLE}}<br>
-      {{CHARITY_NAME}}
-    </p>
+<body style="margin: 0; padding: 0; background-color: #f4f1ec;">
+  <main style="width: 100%; padding: 24px 12px; box-sizing: border-box;">
+    <table role="presentation" style="width: 100%; max-width: 600px; margin: 0 auto; border-collapse: collapse; background-color: #ffffff;">
+      <tr>
+        <td style="padding: 40px 48px; font-family: Georgia, 'Times New Roman', serif; color: #222222; font-size: 17px; line-height: 1.65;">
+          <p style="margin: 0 0 32px; text-align: right; color: #666666; font-size: 14px;">{{DATE}}</p>
+
+          <p style="margin: 0 0 24px;">{{SALUTATION}}</p>
+
+          <p style="margin: 0 0 20px; text-indent: 2em;">{{OPENING_PARAGRAPH}}</p>
+
+          <p style="margin: 0 0 20px; text-indent: 2em;">{{CAMPAIGN_PARAGRAPH}}</p>
+
+          <p style="margin: 0 0 28px; text-indent: 2em;">{{ASK_PARAGRAPH}}</p>
+
+          <p style="margin: 0 0 28px; text-indent: 2em;">{{CLOSING_PARAGRAPH}}</p>
+
+          <p style="margin: 0 0 32px;">
+            <a href="{{DONATION_URL}}" style="display: inline-block; padding: 12px 20px; background-color: #24543d; color: #ffffff; text-decoration: none; border-radius: 4px; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;">Make a secure donation</a>
+          </p>
+
+          <p style="margin: 0;">With gratitude,</p>
+          <p style="margin: 8px 0 0;">
+            <strong>{{SENDER_NAME}}</strong><br>
+            {{SENDER_TITLE}}<br>
+            {{CHARITY_NAME}}
+          </p>
+        </td>
+      </tr>
+    </table>
   </main>
 </body>
 </html>

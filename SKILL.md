@@ -10,7 +10,7 @@ description: >-
 
 # Charity Donor Outreach
 
-Create grounded HTML donor-letter drafts from an uploaded CSV, pasted donor list, or individual donor record. This is a dependency-free, prompt-native workflow: use file reading, reasoning, basic arithmetic, and template substitution only. Return drafts in the conversation. Never send them. Every draft requires human review.
+Create grounded HTML donor-letter drafts from an uploaded CSV, pasted donor list, individual donor record, or the bundled synthetic example dataset. This is a dependency-free, prompt-native workflow: use file reading, reasoning, basic arithmetic, and template substitution only. Return drafts in the conversation. Never send them. Every draft requires human review.
 
 ## Read these references
 
@@ -28,6 +28,8 @@ Use `templates/donor-letter.html` for default output. Use `templates/donor-lette
 ## Phase 1: Understand the request
 
 Identify the donor source, campaign type, charity name, donation URL, campaign date or `as_of_date`, approved facts/claims, supplied sender name/title, desired donors, and output scope.
+
+If the user provides no donor CSV, donor list, or individual donor record, automatically use `examples/donors.mock.csv`. Do not ask for confirmation. Treat every record in that file as synthetic demonstration data, never as a real donor. State `Using bundled synthetic mock donor data` in the response summary and label each donor section `Mock data — demonstration draft` outside the HTML. User-provided donor data always takes precedence over the bundled mock file.
 
 Do not repeatedly question the user when a safe omission or documented neutral fallback works. Never invent a business fact. A missing donation URL is critical: ask for it, or leave `REVIEW REQUIRED: donation URL missing` visibly outside the letter. Use `Development Team` as the sender only as the documented neutral fallback, and warn the reviewer.
 
@@ -69,6 +71,8 @@ Show a compact calculation trace only when requested, when data conflicts, or wh
 
 Use `references/campaign-messaging.md` for Emergency Appeal, Annual Fund, Capital Campaign, Event Fundraiser, or Unknown campaign. Preserve a suitable tone, but use only supplied and explicitly approved facts.
 
+Write with a warm, natural human voice. Begin with sincere gratitude grounded in known support, acknowledge the donor as a valued part of the community without claiming private feelings or motivations, and use caring language about the shared work. Frame the ask as a respectful invitation rather than pressure. End with a separate sentence of appreciation whether or not the donor chooses to give. Avoid stiff, transactional, exaggerated, guilt-inducing, or overly formal wording.
+
 Matching language requires explicit confirmation. Naming opportunities, legacy giving, premiums, gifts, deadlines, registration counts, impact figures, urgency, and relationship-manager identity require supplied approval. Omit unavailable facts; never fabricate replacements.
 
 ## Phase 7: Build a safe salutation
@@ -84,11 +88,11 @@ Never infer Mr., Mrs., Ms., Mx., Dr., gender, pronouns, marital status, ethnicit
 
 ## Phase 8: Generate the letter
 
-Fill `templates/donor-letter.html` and return the rendered HTML directly in the conversation. Preserve the core fields: date, salutation, charity, grounded lifetime giving when available, campaign paragraph, exact ask, approved tier-specific line, donation URL, sender, and title.
+Fill `templates/donor-letter.html` and return the rendered HTML directly in the conversation. Preserve the core fields: date, salutation, charity, grounded lifetime giving when available, campaign paragraph, exact ask, closing appreciation, approved tier-specific line, donation URL, sender, and title.
 
 Escape untrusted text. Do not return scripts, iframes, event handlers, tracking pixels, unapproved URLs, or unresolved placeholders. If a value is unavailable, omit its optional sentence or use the explicitly documented fallback—never invent it.
 
-For multiple donors, preserve input order and return clearly labeled, separated drafts. Process a manageable batch that fits the current context. Track completed, skipped, warning, and remaining counts. Stop before truncation, report exactly which records remain, and avoid regenerating completed records during the active task.
+For multiple donors, preserve input order and return clearly labeled, separated drafts. Process a manageable batch that fits the current context. Track completed, skipped, warning, and remaining counts. Stop before truncation, report exactly which records remain, and avoid regenerating completed records during the active task. When the bundled 50-record mock file is selected, start with a manageable first batch and identify all unprocessed mock donor IDs in the remaining count.
 
 ## Phase 9: Review and return
 
@@ -98,4 +102,4 @@ Do not generate a letter for a donor marked do-not-contact, opted out, deceased,
 
 ## Completion summary
 
-Report the number completed, skipped, warning-bearing, and remaining; the campaign and date basis; any safe fallbacks; and confirmation that asks and claims were reviewed against the references. The HTML letters—not structured JSON—are the default deliverable.
+Report the donor source; the number completed, skipped, warning-bearing, and remaining; the campaign and date basis; any safe fallbacks; and confirmation that asks and claims were reviewed against the references. When mock data was selected automatically, repeat that the records and drafts are synthetic demonstrations. The HTML letters—not structured JSON—are the default deliverable.

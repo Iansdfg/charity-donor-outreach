@@ -6,6 +6,7 @@ Before returning every letter, confirm all items:
 - [ ] Lifetime giving and largest gift use the reconciled source; unavailable amounts are omitted.
 - [ ] Financial tier and engagement status were handled separately.
 - [ ] The ask follows the exact ordered rules and appears consistently.
+- [ ] The tone includes grounded gratitude, a caring connection, a respectful invitation, and a separate appreciative close without guilt, pressure, false intimacy, or invented feelings.
 - [ ] Every factual campaign statement is supplied and approved.
 - [ ] Match wording appears only for an explicitly confirmed match.
 - [ ] No honorific, demographic trait, wealth, or motivation was inferred.
@@ -14,7 +15,9 @@ Before returning every letter, confirm all items:
 - [ ] No placeholder remains (`{{...}}`, `[PLACEHOLDER]`, or `REVIEW...` inside HTML).
 - [ ] No scripts, iframes, event handlers, forms, remote images, tracking pixels, or raw uploaded HTML remains.
 - [ ] HTML has a language, charset, main landmark, readable text, and descriptive donation link.
+- [ ] The opening, campaign, ask, and closing paragraphs use a consistent `2em` first-line indent plus vertical spacing; the salutation, button, and signature are not indented.
 - [ ] Suppressed donors have no letter.
 - [ ] The response says `Draft — human review required` outside the HTML.
+- [ ] If bundled mock data was used, the summary says so and each donor section is labeled `Mock data — demonstration draft` outside the HTML.
 
 For a batch, also report completed, skipped, warnings, and remaining counts, preserve input order, and clearly separate each donor’s HTML.
