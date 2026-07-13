@@ -129,12 +129,12 @@ Run cases 1–15 in input order. Confirm clear donor labels, no output for case 
 - **Expected source:** automatically read `examples/donors.mock.csv`; do not ask for confirmation.
 - **Expected precedence:** if donor data is subsequently supplied, use it instead of the bundled file.
 - **Expected labeling:** summary says `Using bundled synthetic mock donor data`; every donor section says `Mock data — demonstration draft` outside its HTML.
-- **Expected batching:** preserve mock CSV order, generate only a manageable first batch, and report completed and remaining mock donor IDs/counts.
+- **Expected batching:** preserve mock CSV order, generate only a manageable first batch, and report completed and remaining row numbers, donor names, and counts.
 - **Prohibited:** describing mock people as real donors, mixing mock data with later user-provided records, or omitting the synthetic-data disclosure.
 
 ## 17. Dorothy HTML and tone regression
 
-- **Input:** bundled mock donor `D-1007`, Dorothy Callahan; Annual Fund example campaign.
+- **Input:** bundled mock donor Dorothy Callahan (data row 7); Annual Fund example campaign.
 - **Expected classification:** Gold, Active.
 - **Expected ask:** $900 (`$3,500 × 25% = $875`, rounded once to $900).
 - **Expected HTML:** begins with `<!doctype html>`, uses the presentation table and HTML donation anchor, and contains four content paragraphs with `text-indent: 2em`.

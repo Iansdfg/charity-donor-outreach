@@ -28,7 +28,7 @@ No donor file is required:
 
 > `$charity-donor-outreach` Generate FY26 Annual Fund donor letters for Example Community Charity. Use https://example.org/donate and sign them from Jordan Lee, Senior Development Officer.
 
-The skill automatically uses [examples/donors.mock.csv](examples/donors.mock.csv). Those 50 records are synthetic demonstration data. The response labels the source and each donor section as mock/demo output, processes the records in manageable batches, and reports which mock donor IDs remain.
+The skill automatically uses [examples/donors.mock.csv](examples/donors.mock.csv). Those 50 records are synthetic demonstration data. The response labels the source and each donor section as mock/demo output, processes the records in manageable batches, and reports remaining records by CSV row number and donor name.
 
 ### Use your own CSV
 
@@ -42,7 +42,7 @@ User-provided donor data always takes precedence over the bundled mock file.
 
 ### Generate for one donor
 
-> `$charity-donor-outreach` Generate an Annual Fund letter only for donor D-1007 from the bundled mock data.
+> `$charity-donor-outreach` Generate an Annual Fund letter only for Dorothy Callahan from the bundled mock data.
 
 ### Use a campaign file
 
@@ -86,8 +86,8 @@ The skill creates drafts only. Review donor consent, facts, calculations, claims
 ## Legacy-compatible CSV
 
 ```csv
-Donor ID,Donor Name,Tier,Region,Gifts,Largest Gift,Lifetime Total,Last Gift Year,Volunteer
-D-1022,Ada Yamamoto-Pierce,Silver,International,"2020: $3500; 2021: $4000; 2022: $4500; 2023: $5000",$5000,$17000,2023,Yes
+Donor Name,Tier,Region,Gifts (Year: Amount),Largest Gift,Lifetime Total,Last Gift Year,Volunteer
+Ada Yamamoto-Pierce,Silver,International,"2020: $3,500, 2021: $4,000, 2022: $4,500, 2023: $5,000","$5,000","$17,000",2023,Yes
 ```
 
 Here, complete gifts calculate to $17,000, so the skill uses Gold rather than the conflicting supplied Silver tier and reports a review warning. The normal deliverable remains HTML, as shown in [expected-output.html](examples/expected-output.html), not structured JSON.

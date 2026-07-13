@@ -96,7 +96,7 @@ Do not use terse legacy sentences such as “Our records show lifetime giving of
 
 Escape untrusted text. Do not return scripts, iframes, event handlers, tracking pixels, unapproved URLs, or unresolved placeholders. If a value is unavailable, omit its optional sentence or use the explicitly documented fallback—never invent it.
 
-For multiple donors, preserve input order and return clearly labeled, separated drafts. Process a manageable batch that fits the current context. Track completed, skipped, warning, and remaining counts. Stop before truncation, report exactly which records remain, and avoid regenerating completed records during the active task. When the bundled 50-record mock file is selected, start with a manageable first batch and identify all unprocessed mock donor IDs in the remaining count.
+For multiple donors, preserve input order and return clearly labeled, separated drafts. Process a manageable batch that fits the current context. Track completed, skipped, warning, and remaining counts. Stop before truncation, report exactly which records remain, and avoid regenerating completed records during the active task. When the bundled 50-record mock file is selected, start with a manageable first batch and identify all unprocessed records by CSV row number and donor name.
 
 ## Phase 9: Review and return
 
