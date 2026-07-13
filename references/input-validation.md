@@ -1,5 +1,9 @@
 # Input Validation and Legacy Compatibility
 
+## Donor-source fallback
+
+User-provided donor data always takes precedence. If the user supplies no CSV, pasted list, or individual record, read `examples/donors.mock.csv` automatically. Do not request confirmation. The bundled file contains synthetic demonstration records only: disclose that source in the summary, label each donor section as mock/demo outside the HTML, and never describe those records as real supporters.
+
 ## Supported fields
 
 Legacy fields are accepted exactly as supplied:

@@ -18,6 +18,8 @@ Upload a donor CSV and ask naturally:
 
 The agent reads the CSV, reconciles gift values, classifies each donor, calculates the ask, applies only approved campaign claims, fills the controlled HTML template, and returns clearly separated HTML drafts with a review summary.
 
+If no donor CSV, pasted list, or individual donor record is supplied, the skill automatically uses [examples/donors.mock.csv](examples/donors.mock.csv). Those 50 records are synthetic demonstration data. The response labels the source and each resulting donor section as mock/demo output; user-provided data always takes precedence.
+
 You can also provide campaign details in YAML, such as [campaign.annual-fund.yaml](examples/campaign.annual-fund.yaml):
 
 ```yaml
@@ -77,4 +79,3 @@ Review policy changes with fundraising, privacy, accessibility, and legal stakeh
 This is a prompt-native skill, not a campaign platform. The executing model performs parsing, arithmetic, and substitution, so the repository cannot guarantee deterministic enforcement, transactional state, exactly-once batching, distributed processing, auditing, or delivery controls. Large donor lists must be processed in bounded batches that fit the runtime context.
 
 Organizations may enforce consent, suppression, arithmetic, claims, auditing, and delivery in a surrounding application, but those external systems are not required to install or use this skill. Human review remains mandatory.
-

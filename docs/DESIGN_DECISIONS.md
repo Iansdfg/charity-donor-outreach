@@ -8,6 +8,8 @@ The repository contains no executable runtime. The agent uses file reading, reas
 
 Original columns remain first-class. Stable IDs and consent/salutation fields are optional improvements, not migration prerequisites. Semicolon-separated gifts are preferred for unambiguous parsing, while common legacy formats remain accepted.
 
+When no donor data is supplied, the skill selects the bundled 50-record mock CSV automatically so it remains immediately demonstrable. Prominent synthetic-data labels prevent the examples from being mistaken for real donors. Any user-provided donor source overrides this fallback.
+
 ## Source precedence
 
 Complete parseable gift history outranks written rules, supplied summaries, and safe fallbacks. This preserves user convenience while making conflicts visible. Missing history never causes invented transactions.

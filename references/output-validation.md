@@ -16,5 +16,6 @@ Before returning every letter, confirm all items:
 - [ ] HTML has a language, charset, main landmark, readable text, and descriptive donation link.
 - [ ] Suppressed donors have no letter.
 - [ ] The response says `Draft — human review required` outside the HTML.
+- [ ] If bundled mock data was used, the summary says so and each donor section is labeled `Mock data — demonstration draft` outside the HTML.
 
 For a batch, also report completed, skipped, warnings, and remaining counts, preserve input order, and clearly separate each donor’s HTML.
