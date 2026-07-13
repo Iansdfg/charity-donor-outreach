@@ -1,0 +1,16 @@
+{{DATE}}
+
+{{SALUTATION}}
+
+{{OPENING_PARAGRAPH}}
+
+{{CAMPAIGN_PARAGRAPH}}
+
+{{ASK_PARAGRAPH}}
+
+Make a secure donation: {{DONATION_URL}}
+
+With gratitude,
+{{SENDER_NAME}}
+{{SENDER_TITLE}}
+{{CHARITY_NAME}}

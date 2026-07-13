@@ -1,4 +1,3 @@
 # Contributing
 
-Use Python 3.12+, keep business decisions deterministic and policy-versioned, add tests for every behavior, and avoid production PII. Run Ruff, mypy, pytest, schema/YAML validation, and the fake-provider workflow before opening a change. Any policy or template change requires a version bump, golden evaluation, and human reviewer. Never add delivery/send functionality to this package.
-
+Keep the skill dependency-free and prompt-native. Changes should improve `SKILL.md`, focused references, portable examples, or evaluation cases without adding a required runtime. Avoid production donor data. Review policy or template changes against `tests/test-cases.md` and `tests/evaluation-rubric.md`, and require a human reviewer. Never add communication delivery or sending behavior.

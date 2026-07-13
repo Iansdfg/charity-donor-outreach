@@ -1,11 +1,4 @@
-.venv/
 .DS_Store
-__pycache__/
-*.py[cod]
-.pytest_cache/
-.coverage
-htmlcov/
-runs/
-dist/
-build/
-*.egg-info/
+Thumbs.db
+*.swp
+*.tmp

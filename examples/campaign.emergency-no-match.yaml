@@ -1,0 +1,11 @@
+campaign_name: Emergency Response Appeal
+campaign_type: Emergency Appeal
+as_of_date: 2026-07-01
+charity_name: Example Community Charity
+donation_url: https://example.org/emergency
+sender_name: Jordan Lee
+sender_title: Senior Development Officer
+approved_claims:
+  - We are responding to the stated emergency need.
+match:
+  status: none

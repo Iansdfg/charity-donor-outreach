@@ -1,6 +1,5 @@
 # Security Policy
 
-Report vulnerabilities privately to the repository maintainers; do not include donor data in reports. Supported releases receive security fixes on the latest minor line.
+Report vulnerabilities privately to repository maintainers; do not include donor data in reports.
 
-Treat all uploaded fields and provider output as hostile. Never commit production donor data, secrets, run artifacts, or API keys. Immediately stop affected runs, preserve minimal donor-ID audit evidence, revoke exposed credentials, quarantine outputs, correct policy/templates, and rerun from trusted inputs after review. See `docs/SECURITY_AND_PRIVACY.md`.
-
+Treat uploaded fields and generated output as untrusted. Never commit production donor data or secrets. Quarantine affected drafts, correct the skill/reference/template rule, add a portable regression case, and repeat human review from trusted inputs. Prompt-native controls reduce risk but do not replace host-level sanitization, consent, access, audit, or delivery controls.

@@ -1,0 +1,11 @@
+campaign_name: FY26 Annual Fund
+campaign_type: Annual Fund
+as_of_date: 2026-07-01
+charity_name: Example Community Charity
+donation_url: https://example.org/donate
+sender_name: Jordan Lee
+sender_title: Senior Development Officer
+approved_claims:
+  - Your support sustains our community programs.
+match:
+  status: none

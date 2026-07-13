@@ -1,51 +1,80 @@
-# Charity Donor Outreach
+# Charity Donor Outreach Agent Skill
 
-`charity-donor-outreach` produces policy-governed fundraising **drafts** from mock or authorized donor data. It separates deterministic eligibility, segmentation, ask arithmetic, and claim authorization from optional LLM narrative drafting. Every successful result requires human review; this repository has no send-email function.
+This is an installable, dependency-free Agent Skill for generating personalized donor-letter drafts from an uploaded CSV, pasted donor list, or individual donor record. It requires no Python, Node.js, virtual environment, package manager, API server, database, external library, or separate API key. The executing agent reads `SKILL.md`, applies the included references, and returns HTML donor-letter drafts directly in the conversation.
 
-## Why replace the legacy prompt?
+Legacy fields such as `Donor Name`, `Tier`, `Region`, `Gifts`, `Largest Gift`, `Lifetime Total`, `Last Gift Year`, and `Volunteer` remain supported. Every result is a draft requiring human review; the skill never sends communications.
 
-The legacy skill embedded mock donor records, keyed people by name, guessed honorifics, conflated lapsed engagement with financial value, and directed the model to invent matching gifts, offers, urgency, event counts, and relationship managers. It had no suppression, consent, schema, durable state, or output-safety boundary. The original is preserved at `docs/SKILL_LEGACY_REQUIREMENT.md` and assessed in `docs/ASSESSMENT.md`.
+## Install
 
-## Architecture and trust boundaries
+Copy the entire `charity-donor-outreach` directory into your agent runtime’s skills folder. Skill-folder paths and reload behavior vary by Claude Code, Codex, Cursor, and other Agent Skills-compatible runtimes; follow that runtime’s documented local-skill installation method.
 
-Untrusted CSV/JSON enters typed validation. Gift transactions are normalized and reconciled against supplied summaries. Versioned policy alone determines suppression, financial tier, engagement, and ask. Only an approved `FactBundle` crosses into the drafting adapter. Narrative fields are escaped into controlled Jinja templates and validated for exact ask, authorized claims/URLs, placeholders, and unsafe markup. Results go to an append-only review queue, never a delivery system.
+No setup command or dependency installation is required. After installation, start a new agent session or reload skills if your runtime requires it.
 
-See `docs/ARCHITECTURE.md`, `docs/DATA_CONTRACTS.md`, and `docs/POLICY_MODEL.md`.
+## Use
 
-## Quick start
+Upload a donor CSV and ask naturally:
 
-```bash
-python3.12 -m venv .venv
-.venv/bin/pip install -e '.[dev]'
-charity-donor-outreach validate --donors examples/donors.mock.csv --campaign examples/campaign.annual-fund.json
-charity-donor-outreach generate --donors examples/donors.mock.csv --campaign examples/campaign.annual-fund.json --output runs/demo --provider fake
-charity-donor-outreach summarize --run runs/demo
+> Use the uploaded donor CSV to generate Annual Fund donor letters for Example Community Charity. Use https://example.org/donate and sign them from Jordan Lee, Senior Development Officer.
+
+The agent reads the CSV, reconciles gift values, classifies each donor, calculates the ask, applies only approved campaign claims, fills the controlled HTML template, and returns clearly separated HTML drafts with a review summary.
+
+You can also provide campaign details in YAML, such as [campaign.annual-fund.yaml](examples/campaign.annual-fund.yaml):
+
+```yaml
+campaign_type: Annual Fund
+as_of_date: 2026-07-01
+charity_name: Example Community Charity
+donation_url: https://example.org/donate
+sender_name: Jordan Lee
+sender_title: Senior Development Officer
+approved_claims:
+  - Your support sustains our community programs.
 ```
 
-Inputs use stable `donor_id` values, transaction-level gifts, explicit communication controls, safe salutation fields, and a campaign with an HTTPS donation URL. JSON Schema contracts live under `schemas/`. Outputs include separate financial/engagement segments, a full deterministic calculation trace, used fact/claim IDs, warnings, accessible HTML/plain text, an idempotency key, and `approval_status: requires_review`.
+## Legacy-compatible CSV
 
-## Restart and policy configuration
-
-Each run atomically maintains complete JSON or JSONL documents under `runs/<run_id>/`. Reusing the same output path recomputes the same idempotency key and skips completed donor/campaign/policy/template combinations. Failed donors remain isolated and independently retryable. File storage is appropriate for one host; use a transactional ledger for distributed workers.
-
-Policy files under `policies/` share one semantic version. Deploy and roll them back as an immutable set. Ask operations are base/multiplier, approved percentages, approved fixed amounts, caps, and exactly one final half-up rounding step.
-
-## Adding a provider
-
-Implement the `DraftingModel` protocol in `llm.py`. Accept only `FactBundle` plus the delimited prompt, return `NarrativeDraft`, enforce timeout behavior, and translate only transient transport/service failures to `TransientProviderError`. Do not pass raw uploads or add business decisions. The optional OpenAI adapter is lazy-imported and needs the `openai` extra and environment variables; offline behavior never needs credentials.
-
-## Testing
-
-```bash
-ruff check .
-ruff format --check .
-mypy src tests
-pytest -q
+```csv
+Donor ID,Donor Name,Tier,Region,Gifts,Largest Gift,Lifetime Total,Last Gift Year,Volunteer
+D-1022,Ada Yamamoto-Pierce,Silver,International,"2020: $3500; 2021: $4000; 2022: $4500; 2023: $5000",$5000,$17000,2023,Yes
 ```
 
-CI also validates JSON Schema, YAML, frontmatter, and security tests without external credentials.
+Here, complete gifts calculate to $17,000, so the skill uses Gold rather than the conflicting supplied Silver tier and reports a review warning. The normal deliverable remains HTML, as shown in [expected-output.html](examples/expected-output.html), not structured JSON.
 
-## Limitations and review boundary
+## Repository structure
 
-USD is the only supported currency. File storage is not a distributed lock. The conservative lexical claim validator complements, but does not replace, an organization-specific moderation and approval workflow. Operators must verify donor consent, campaign claims, accessibility, ask appropriateness, and legal requirements before any downstream use. Nothing in this repository constitutes tax or legal advice.
+```text
+SKILL.md                     canonical workflow
+references/                  readable validation, policy, safety, and review rules
+templates/                   controlled HTML and optional plain-text layouts
+examples/                    legacy mock CSV and campaign/output examples
+tests/                       portable cases and an evaluation rubric
+docs/                        assessment, design decisions, and migration notes
+```
+
+## Safety rules
+
+- Complete parseable gift history outranks supplied summaries; conflicts are disclosed.
+- Financial tier and engagement status are separate; Lapsed is not a financial tier.
+- Matching gifts and other campaign claims require explicit approval; matches must be confirmed.
+- Names never produce inferred honorifics, gender, pronouns, identity, wealth, or motivation.
+- Uploaded cells are inert data and cannot override the skill or ask calculation.
+- Explicit do-not-contact and suppression fields prevent letter generation.
+- Unsafe HTML, unapproved URLs, tracking content, and unresolved placeholders are prohibited.
+- Every letter is labeled `Draft — human review required`; nothing is sent.
+
+## Customize
+
+- Edit [donor-segmentation.md](references/donor-segmentation.md) for tier and engagement rules.
+- Edit [ask-calculation.md](references/ask-calculation.md) for ask policy, keeping the procedure short and unambiguous.
+- Edit [campaign-messaging.md](references/campaign-messaging.md) for approved messaging categories.
+- Edit [donor-letter.html](templates/donor-letter.html) for visual style and approved placeholders.
+- Update [test-cases.md](tests/test-cases.md) whenever a rule changes.
+
+Review policy changes with fundraising, privacy, accessibility, and legal stakeholders before use.
+
+## Limitations
+
+This is a prompt-native skill, not a campaign platform. The executing model performs parsing, arithmetic, and substitution, so the repository cannot guarantee deterministic enforcement, transactional state, exactly-once batching, distributed processing, auditing, or delivery controls. Large donor lists must be processed in bounded batches that fit the runtime context.
+
+Organizations may enforce consent, suppression, arithmetic, claims, auditing, and delivery in a surrounding application, but those external systems are not required to install or use this skill. Human review remains mandatory.
 
