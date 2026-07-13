@@ -12,6 +12,20 @@ description: >-
 
 Create grounded HTML donor-letter drafts from an uploaded CSV, pasted donor list, individual donor record, or the bundled synthetic example dataset. This is a dependency-free, prompt-native workflow: use file reading, reasoning, basic arithmetic, and template substitution only. Return drafts in the conversation. Never send them. Every draft requires human review.
 
+## Mandatory output contract
+
+Apply this contract before all other generation choices:
+
+1. Read `templates/donor-letter.html` and `references/campaign-messaging.md` during the current task—do not rely on memory or a previously generated letter.
+2. Default output is the complete rendered HTML template, never Markdown or plain prose.
+3. Include four distinct content paragraphs: warm grounded gratitude, caring approved campaign context, respectful ask, and appreciative close.
+4. Preserve `text-indent: 2em` on all four content paragraphs.
+5. Use an HTML donation anchor, never `[Make a secure donation](URL)`.
+6. Reject and regenerate copy containing the old three-paragraph pattern: “Our records show lifetime giving…,” standalone “Your support sustains…,” and standalone “Would you consider a gift…?”
+7. If the user explicitly asks to view the result in Mail, create an unsent `.eml` whose MIME body is the same complete HTML. Opening an unsent draft is allowed; sending, scheduling, or marking it approved is not.
+
+If any item fails, do not show the failed draft. Regenerate and recheck it first.
+
 ## Read these references
 
 Read only what the task needs, but always read the safety, input, ask, and output rules before generating:
@@ -95,6 +109,8 @@ Fill `templates/donor-letter.html` and return the rendered HTML directly in the 
 Do not use terse legacy sentences such as “Our records show lifetime giving of…,” “Your support sustains our community programs” as a complete paragraph, or “Would you consider a gift of…?” by themselves. Integrate those grounded facts into the warm five-part voice required by Phase 6.
 
 Escape untrusted text. Do not return scripts, iframes, event handlers, tracking pixels, unapproved URLs, or unresolved placeholders. If a value is unavailable, omit its optional sentence or use the explicitly documented fallback—never invent it.
+
+When the user explicitly asks to show the draft in Mail or another local mail application, save the validated content as an unsent `.eml` in `mail_drafts/`. Include `X-Unsent: 1`, `X-Draft-Status: Human review required`, `Content-Type: text/html; charset=UTF-8`, and the exact validated HTML body. Use the environment’s normal file-open capability to open that `.eml` only when authorized by the user. Never convert the body to Markdown, populate an unverified recipient address, or send/schedule the message. If the environment cannot open Mail, return the `.eml` file path instead.
 
 For multiple donors, preserve input order and return clearly labeled, separated drafts. Process a manageable batch that fits the current context. Track completed, skipped, warning, and remaining counts. Stop before truncation, report exactly which records remain, and avoid regenerating completed records during the active task. When the bundled 50-record mock file is selected, start with a manageable first batch and identify all unprocessed records by CSV row number and donor name.
 

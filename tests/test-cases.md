@@ -141,3 +141,13 @@ Run cases 1–15 in input order. Confirm clear donor labels, no output for case 
 - **Expected tone:** natural greeting, gratitude grounded in $11,000 lifetime support, caring approved community context, low-pressure $900 invitation, and a separate appreciative close.
 - **Prohibited format:** Markdown/plain-text letter or `[Make a secure donation](https://example.org/donate)`.
 - **Prohibited copy:** standalone “Our records show lifetime giving of $11,000,” standalone “Your support sustains our community programs,” or standalone “Would you consider a gift of $900?”
+
+## 18. Robert Mail-app regression
+
+- **Input:** “Create email for Robert Svensson, and show on Mail app”; bundled mock data and Annual Fund example campaign.
+- **Expected classification:** Platinum, Lapsed using `as_of_date: 2026-07-01`.
+- **Expected ask:** $15,000 (`$50,000 × 40% × 75%`).
+- **Expected artifact:** unsent `.eml` with human-review header and complete HTML MIME body; open as a draft only when the environment supports it.
+- **Expected format:** presentation table, HTML donation anchor, and four paragraphs with `text-indent: 2em`.
+- **Expected tone:** warm grounded thanks for $145,000 lifetime support, caring approved community context, low-pressure reconnection ask, and separate appreciation regardless of giving.
+- **Prohibited:** Markdown output, Markdown donation link, invented recipient address, sending/scheduling, or the terse legacy three-paragraph pattern.

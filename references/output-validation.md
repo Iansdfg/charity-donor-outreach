@@ -24,3 +24,5 @@ Before returning every letter, confirm all items:
 - [ ] If bundled mock data was used, the summary says so and each donor section is labeled `Mock data — demonstration draft` outside the HTML.
 
 For a batch, also report completed, skipped, warnings, and remaining counts, preserve input order, and clearly separate each donor’s HTML.
+
+For a Mail-app request, additionally confirm the `.eml` is marked unsent and review-required, has an HTML MIME body identical to the validated letter, has no invented recipient address, and was opened only as a draft—not sent or scheduled.
