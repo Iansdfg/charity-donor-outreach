@@ -10,15 +10,45 @@ Copy the entire `charity-donor-outreach` directory into your agent runtime’s s
 
 No setup command or dependency installation is required. After installation, start a new agent session or reload skills if your runtime requires it.
 
+### Install from GitHub in Codex
+
+Ask your Codex agent:
+
+> Use `$skill-installer` to install the skill from https://github.com/Iansdfg/charity-donor-outreach
+
+Restart Codex or begin a new session afterward so it loads the latest instructions.
+
 ## Use
 
-Upload a donor CSV and ask naturally:
+Invoke the skill explicitly with `$charity-donor-outreach`, followed by a natural-language request.
 
-> Use the uploaded donor CSV to generate Annual Fund donor letters for Example Community Charity. Use https://example.org/donate and sign them from Jordan Lee, Senior Development Officer.
+### Use the bundled mock donors
+
+No donor file is required:
+
+> `$charity-donor-outreach` Generate FY26 Annual Fund donor letters for Example Community Charity. Use https://example.org/donate and sign them from Jordan Lee, Senior Development Officer.
+
+The skill automatically uses [examples/donors.mock.csv](examples/donors.mock.csv). Those 50 records are synthetic demonstration data. The response labels the source and each donor section as mock/demo output, processes the records in manageable batches, and reports which mock donor IDs remain.
+
+### Use your own CSV
+
+Upload a donor CSV, then ask:
+
+> `$charity-donor-outreach` Use the uploaded donor CSV to generate personalized Annual Fund HTML letters. The charity is Helping Hands. Use https://helpinghands.org/donate and sign them from Maria Chen, Development Director. Use July 1, 2026 as the campaign date.
 
 The agent reads the CSV, reconciles gift values, classifies each donor, calculates the ask, applies only approved campaign claims, fills the controlled HTML template, and returns clearly separated HTML drafts with a review summary.
 
-If no donor CSV, pasted list, or individual donor record is supplied, the skill automatically uses [examples/donors.mock.csv](examples/donors.mock.csv). Those 50 records are synthetic demonstration data. The response labels the source and each resulting donor section as mock/demo output; user-provided data always takes precedence.
+User-provided donor data always takes precedence over the bundled mock file.
+
+### Generate for one donor
+
+> `$charity-donor-outreach` Generate an Annual Fund letter only for donor D-1007 from the bundled mock data.
+
+### Use a campaign file
+
+Attach a campaign YAML file or reference an included example:
+
+> `$charity-donor-outreach` Use `examples/campaign.annual-fund.yaml` and generate letters for the first five mock donors.
 
 You can also provide campaign details in YAML, such as [campaign.annual-fund.yaml](examples/campaign.annual-fund.yaml):
 
@@ -32,6 +62,26 @@ sender_title: Senior Development Officer
 approved_claims:
   - Your support sustains our community programs.
 ```
+
+### Request plain text
+
+HTML is the default. To request both formats:
+
+> `$charity-donor-outreach` Generate HTML letters and include plain-text alternatives.
+
+### Expected result
+
+The skill returns:
+
+- a brief validation and warning summary;
+- `Draft — human review required` labeling;
+- complete HTML rather than Markdown;
+- warm, human language with indented content paragraphs;
+- a grounded recommended ask;
+- only supplied and approved campaign claims; and
+- completed, skipped, warning, and remaining counts for a batch.
+
+The skill creates drafts only. Review donor consent, facts, calculations, claims, names, and URLs before using any letter.
 
 ## Legacy-compatible CSV
 
