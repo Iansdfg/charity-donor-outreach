@@ -14,7 +14,7 @@ Before returning every letter, confirm all items:
 - [ ] No placeholder remains (`{{...}}`, `[PLACEHOLDER]`, or `REVIEW...` inside HTML).
 - [ ] No scripts, iframes, event handlers, forms, remote images, tracking pixels, or raw uploaded HTML remains.
 - [ ] HTML has a language, charset, main landmark, readable text, and descriptive donation link.
-- [ ] The letter uses consistent outer padding, paragraph spacing, and signature spacing so content is not visually crowded.
+- [ ] The opening, campaign, and ask paragraphs use a consistent `2em` first-line indent plus vertical spacing; the salutation, button, and signature are not indented.
 - [ ] Suppressed donors have no letter.
 - [ ] The response says `Draft — human review required` outside the HTML.
 - [ ] If bundled mock data was used, the summary says so and each donor section is labeled `Mock data — demonstration draft` outside the HTML.
