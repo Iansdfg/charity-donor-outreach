@@ -71,6 +71,8 @@ Show a compact calculation trace only when requested, when data conflicts, or wh
 
 Use `references/campaign-messaging.md` for Emergency Appeal, Annual Fund, Capital Campaign, Event Fundraiser, or Unknown campaign. Preserve a suitable tone, but use only supplied and explicitly approved facts.
 
+Write with a warm, natural human voice. Begin with sincere gratitude grounded in known support, acknowledge the donor as a valued part of the community without claiming private feelings or motivations, and use caring language about the shared work. Frame the ask as a respectful invitation rather than pressure. End with a separate sentence of appreciation whether or not the donor chooses to give. Avoid stiff, transactional, exaggerated, guilt-inducing, or overly formal wording.
+
 Matching language requires explicit confirmation. Naming opportunities, legacy giving, premiums, gifts, deadlines, registration counts, impact figures, urgency, and relationship-manager identity require supplied approval. Omit unavailable facts; never fabricate replacements.
 
 ## Phase 7: Build a safe salutation
@@ -86,7 +88,7 @@ Never infer Mr., Mrs., Ms., Mx., Dr., gender, pronouns, marital status, ethnicit
 
 ## Phase 8: Generate the letter
 
-Fill `templates/donor-letter.html` and return the rendered HTML directly in the conversation. Preserve the core fields: date, salutation, charity, grounded lifetime giving when available, campaign paragraph, exact ask, approved tier-specific line, donation URL, sender, and title.
+Fill `templates/donor-letter.html` and return the rendered HTML directly in the conversation. Preserve the core fields: date, salutation, charity, grounded lifetime giving when available, campaign paragraph, exact ask, closing appreciation, approved tier-specific line, donation URL, sender, and title.
 
 Escape untrusted text. Do not return scripts, iframes, event handlers, tracking pixels, unapproved URLs, or unresolved placeholders. If a value is unavailable, omit its optional sentence or use the explicitly documented fallback—never invent it.
 
